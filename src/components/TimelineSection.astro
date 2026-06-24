@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import TimelineItem from './TimelineItem.astro';
+
+const experience = await getCollection('experience');
+const education = await getCollection('education');
+
+const months: Record<string, number> = {
+	ENERO: 0,
+	FEBRERO: 1,
+	MARZO: 2,
+	ABRIL: 3,
+	MAYO: 4,
+	JUNIO: 5,
+	JULIO: 6,
+	AGOSTO: 7,
+	SEPTIEMBRE: 8,
+	OCTUBRE: 9,
+	NOVIEMBRE: 10,
+	DICIEMBRE: 11,
+};
+
+function getSortKey(value: Date | string): number {
+	if (value instanceof Date) return value.getTime();
+
+	const normalized = String(value).toUpperCase().trim();
+	if (normalized === 'ACTUAL') return Number.MAX_SAFE_INTEGER;
+
+	const yearMatch = normalized.match(/\d{4}/);
+	const year = yearMatch ? Number.parseInt(yearMatch[0], 10) : 0;
+
+	for (const [month, index] of Object.entries(months)) {
+		if (normalized.includes(month)) {
+			return new Date(year, index).getTime();
+		}
+	}
+
+	if (/^\d{4}$/.test(normalized)) {
+		return new Date(Number.parseInt(normalized, 10), 0).getTime();
+	}
+
+	return year;
+}
+
+function formatDate(value: Date | string): string {
+	if (value instanceof Date) {
+		return value.getFullYear().toString();
+	}
+	return String(value);
+}
+
+function formatDateRange(start: Date | string, end: Date | string): string {
+	return `${formatDate(start)} — ${formatDate(end)}`;
+}
+
+const sortedExperience = [...experience].sort(
+	(a, b) => getSortKey(b.data.startDate) - getSortKey(a.data.startDate),
+);
+
+const sortedEducation = [...education].sort(
+	(a, b) => getSortKey(b.data.startDate) - getSortKey(a.data.startDate),
+);
+---
+
+<section class="py-24" aria-labelledby="trayectoria-heading">
+	<h2 id="trayectoria-heading" class="mb-16 text-center text-3xl font-semibold text-slate-800">
+		Trayectoria
+	</h2>
+
+	<div class="grid grid-cols-1 gap-12 md:grid-cols-2">
+		<div>
+			<h3 class="mb-8 text-xl font-light text-slate-400">Experiencia Clínica</h3>
+			<div>
+				{
+					sortedExperience.map((entry) => (
+						<TimelineItem
+							title={entry.data.role}
+							subtitle={entry.data.clinic}
+							date={formatDateRange(entry.data.startDate, entry.data.endDate)}
+							type="experiencia"
+						/>
+					))
+				}
+			</div>
+		</div>
+
+		<div>
+			<h3 class="mb-8 text-xl font-light text-slate-400">Formación Académica</h3>
+			<div>
+				{
+					sortedEducation.map((entry) => (
+						<TimelineItem
+							title={entry.data.degree}
+							subtitle={entry.data.institution}
+							date={formatDateRange(entry.data.startDate, entry.data.endDate)}
+							type="educación"
+						/>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>
