@@ -1,7 +1,26 @@
+---
+import ToothIcon from './ToothIcon.astro';
+
+const specialties = [
+	'Preventiva',
+	'Conservadora',
+	'Periodoncia',
+	'Prótesis',
+	'Odontopediatría',
+];
+---
+
 <section
-	class="flex flex-col items-center gap-12 pt-20 pb-32 md:flex-row md:items-center md:gap-12"
+	class="relative overflow-hidden flex flex-col items-center gap-12 pt-20 pb-32 md:flex-row md:items-center md:gap-12"
 	aria-labelledby="hero-heading"
 >
+	<div
+		class="pointer-events-none absolute -right-20 top-10 -z-10 h-96 w-96 text-slate-200/80 opacity-40"
+		aria-hidden="true"
+	>
+		<ToothIcon class="h-full w-full" />
+	</div>
+
 	<div class="order-1 flex shrink-0 justify-center md:order-2 md:justify-end">
 		<img
 			src="/nur-profile.jpg"
@@ -39,24 +58,51 @@
 			</span>
 		</p>
 
-		<p class="mt-8 max-w-2xl text-base leading-relaxed text-text-primary md:text-lg">
-			Graduada en Odontología con experiencia previa en clínicas dentales. Motivada por
-			seguir desarrollándome profesionalmente. Especializada en odontología general
-			integral: preventiva, conservadora, periodoncia, prótesis y odontopediatría. De
-			fácil adaptación, rápido aprendizaje y con un enfoque profundamente empático hacia
-			el paciente.
-		</p>
+		<div class="mt-8 max-w-2xl text-base leading-relaxed text-text-primary md:text-lg">
+			<p>
+				Graduada en <span class="font-semibold text-slate-900">Odontología</span> con
+				experiencia previa en clínicas dentales. Motivada por seguir desarrollándome
+				profesionalmente en{' '}
+				<span class="font-semibold text-slate-900">Odontología General</span>.
+			</p>
+
+			<p class="mt-4 text-text-secondary">
+				De fácil adaptación, rápido aprendizaje y con un enfoque profundamente empático
+				hacia el paciente.
+			</p>
+
+			<div class="mt-6">
+				<p class="mb-3 text-sm font-medium text-text-secondary">
+					Especialidades
+				</p>
+				<ul
+					class="flex flex-wrap justify-center gap-2 md:justify-start"
+					aria-label="Especialidades en odontología general"
+				>
+					{
+						specialties.map((specialty) => (
+							<li>
+								<span class="inline-block rounded-full bg-teal-50 px-3.5 py-1.5 text-sm font-medium text-teal-600">
+									{specialty}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
 
 		<div class="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-5">
 			<a
-				href="#contacto"
-				class="inline-flex items-center justify-center rounded-full bg-teal-600 px-8 py-3 font-medium text-white transition-opacity hover:opacity-90"
+				href="mailto:nurcheb1b16@gmail.com?subject=Contacto%20desde%20CV%20Web"
+				class="inline-flex items-center justify-center rounded-full bg-teal-600 px-8 py-3 font-medium text-white transition-colors hover:bg-teal-700"
 			>
 				Contactar
 			</a>
 			<a
-				href="#descargar-cv"
-				class="inline-flex items-center justify-center rounded-full border border-teal-600 bg-transparent px-8 py-3 font-medium text-teal-600 transition-opacity hover:opacity-75"
+				href="/cv-nur-cheikh.pdf"
+				download
+				class="inline-flex items-center justify-center rounded-full border border-teal-600 bg-transparent px-8 py-3 font-medium text-teal-600 transition-colors hover:bg-teal-50"
 			>
 				Descargar CV
 			</a>

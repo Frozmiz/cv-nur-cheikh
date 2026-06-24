@@ -1,11 +1,11 @@
 ---
 import { idiomas, odontologia, softSkills } from '../config/skills';
+import SkillIcon from './SkillIcon.astro';
 
-const skillGroups = [
-	{ title: 'Clínica', items: odontologia },
-	{ title: 'Perfil Profesional', items: softSkills },
-	{ title: 'Idiomas', items: idiomas },
-];
+const pillClass =
+	'inline-block rounded-lg border border-teal-100 bg-white px-4 py-2 text-sm font-medium text-teal-800 shadow-sm';
+
+const blockClass = 'rounded-2xl bg-slate-100/70 px-6 py-8 md:px-8 md:py-10';
 ---
 
 <section class="py-24" aria-labelledby="skills-heading">
@@ -13,22 +13,55 @@ const skillGroups = [
 		Especialidades y Competencias
 	</h2>
 
-	<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-		{
-			skillGroups.map((group) => (
-				<article class="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-					<h3 class="mb-6 text-xl font-medium text-slate-800">{group.title}</h3>
-					<ul class="flex flex-wrap gap-3">
-						{group.items.map((item) => (
+	<div class="flex flex-col gap-10">
+		<div class={blockClass}>
+			<h3 class="mb-6 flex items-center gap-2.5 text-2xl font-medium text-slate-800">
+				<SkillIcon name="stethoscope" class="h-6 w-6 text-teal-600" />
+				Competencias Clínicas
+			</h3>
+			<ul class="flex flex-wrap gap-3">
+				{
+					odontologia.map((item) => (
+						<li>
+							<span class={pillClass}>{item}</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+			<article class={blockClass}>
+				<h3 class="mb-6 flex items-center gap-2.5 text-lg font-medium text-slate-800">
+					<SkillIcon name="user" class="text-teal-600" />
+					Perfil Profesional
+				</h3>
+				<ul class="flex flex-wrap gap-3">
+					{
+						softSkills.map((item) => (
 							<li>
-								<span class="inline-block rounded-full bg-teal-50 px-4 py-2 text-sm font-medium text-teal-600">
-									{item}
-								</span>
+								<span class={pillClass}>{item}</span>
 							</li>
-						))}
-					</ul>
-				</article>
-			))
-		}
+						))
+					}
+				</ul>
+			</article>
+
+			<article class={blockClass}>
+				<h3 class="mb-6 flex items-center gap-2.5 text-lg font-medium text-slate-800">
+					<SkillIcon name="globe" class="text-teal-600" />
+					Idiomas
+				</h3>
+				<ul class="flex flex-wrap gap-3">
+					{
+						idiomas.map((item) => (
+							<li>
+								<span class={pillClass}>{item}</span>
+							</li>
+						))
+					}
+				</ul>
+			</article>
+		</div>
 	</div>
 </section>

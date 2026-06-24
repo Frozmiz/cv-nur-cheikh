@@ -7,8 +7,14 @@ import SkillsSection from '../components/SkillsSection.astro';
 ---
 
 <Layout>
-	<Header />
-	<Hero />
-	<TimelineSection />
-	<SkillsSection />
+	<Header slot="header" />
+	<div class="reveal">
+		<Hero />
+	</div>
+	<div class="reveal">
+		<TimelineSection />
+	</div>
+	<div class="reveal">
+		<SkillsSection />
+	</div>
 </Layout>

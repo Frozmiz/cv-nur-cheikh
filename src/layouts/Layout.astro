@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
 
 interface Props {
 	title?: string;
@@ -29,8 +30,27 @@ const { title = 'Nur Cheikh Waez | Odontóloga General' } = Astro.props;
 		/>
 	</head>
 	<body>
+		<slot name="header" />
 		<main class="mx-auto max-w-5xl px-6 pb-24 md:px-12 md:pb-32">
 			<slot />
 		</main>
+		<Footer />
+		<script>
+			const revealObserver = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('active');
+							revealObserver.unobserve(entry.target);
+						}
+					});
+				},
+				{ threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+			);
+
+			document.querySelectorAll('.reveal').forEach((el) => {
+				revealObserver.observe(el);
+			});
+		</script>
 	</body>
 </html>
