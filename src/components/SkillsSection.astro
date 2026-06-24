@@ -1,0 +1,34 @@
+---
+import { idiomas, odontologia, softSkills } from '../config/skills';
+
+const skillGroups = [
+	{ title: 'Clínica', items: odontologia },
+	{ title: 'Perfil Profesional', items: softSkills },
+	{ title: 'Idiomas', items: idiomas },
+];
+---
+
+<section class="py-24" aria-labelledby="skills-heading">
+	<h2 id="skills-heading" class="mb-16 text-center text-3xl font-semibold text-slate-800">
+		Especialidades y Competencias
+	</h2>
+
+	<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+		{
+			skillGroups.map((group) => (
+				<article class="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+					<h3 class="mb-6 text-xl font-medium text-slate-800">{group.title}</h3>
+					<ul class="flex flex-wrap gap-3">
+						{group.items.map((item) => (
+							<li>
+								<span class="inline-block rounded-full bg-teal-50 px-4 py-2 text-sm font-medium text-teal-600">
+									{item}
+								</span>
+							</li>
+						))}
+					</ul>
+				</article>
+			))
+		}
+	</div>
+</section>
